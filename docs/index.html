@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f6">
+  <meta name="description" content="IndicSent-M analyzes sentiment in Hinglish and English memes using text and image signals.">
+  <title>IndicSent-M | Meme sentiment analysis</title>
+  <style>
+    :root { color-scheme: light dark; --ink:#18312f; --muted:#607774; --accent:#087f75; --line:#dce7e4; --surface:#fff; --canvas:#f4f7f6; }
+    @media (prefers-color-scheme:dark) { :root { --ink:#e5efed; --muted:#a2b3b0; --accent:#5eead4; --line:#293a3c; --surface:#111c22; --canvas:#0b1217; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { width:min(1080px,calc(100% - 40px)); margin:0 auto; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:24px 0; border-bottom:1px solid var(--line); }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:750; letter-spacing:-.03em; font-size:19px; }
+    .mark { display:grid; place-items:center; width:38px; height:38px; border:1px solid var(--line); border-radius:11px; color:var(--accent); background:var(--surface); font-size:12px; }
+    header a { color:var(--muted); text-decoration:none; font-size:14px; }
+    .hero { padding:86px 0 74px; max-width:800px; }
+    .eyebrow { color:var(--accent); text-transform:uppercase; font-size:12px; font-weight:700; letter-spacing:.13em; }
+    h1 { margin:14px 0; font-size:clamp(42px,7vw,72px); line-height:1.03; letter-spacing:-.06em; }
+    .hero p { margin:0; max-width:680px; color:var(--muted); font-size:19px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+    .button { display:inline-flex; padding:11px 16px; border-radius:8px; border:1px solid var(--line); text-decoration:none; font-weight:650; color:var(--ink); background:var(--surface); }
+    .button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+    section { padding:30px 0; border-top:1px solid var(--line); }
+    h2 { margin:0 0 16px; font-size:22px; letter-spacing:-.03em; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    article { padding:18px; background:var(--surface); border:1px solid var(--line); border-radius:12px; }
+    article strong { display:block; margin-bottom:6px; }
+    article p, .note { margin:0; color:var(--muted); font-size:14px; }
+    table { border-collapse:collapse; width:100%; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; text-align:left; }
+    th,td { padding:11px 14px; border-bottom:1px solid var(--line); }
+    th { font-size:13px; color:var(--muted); font-weight:650; }
+    td:not(:first-child), th:not(:first-child) { text-align:right; }
+    footer { padding:28px 0 42px; color:var(--muted); font-size:13px; }
+    @media(max-width:680px) { header { align-items:flex-start; flex-direction:column; } .hero { padding:58px 0; } .grid { grid-template-columns:1fr; } table { font-size:13px; } th,td { padding:9px 7px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand"><span class="mark">ISM</span> IndicSent-M</div>
+      <a href="https://github.com/dev-maegor/IndicSent-M">View source on GitHub</a>
+    </header>
+    <div class="hero">
+      <div class="eyebrow">Multimodal NLP research</div>
+      <h1>What does this meme really say?</h1>
+      <p>IndicSent-M studies sentiment in Hinglish and English memes by combining the words on the image with the image itself.</p>
+      <div class="actions">
+        <a class="button primary" href="https://huggingface.co/new-space">Create a Gradio Space</a>
+        <a class="button" href="https://github.com/dev-maegor/IndicSent-M">Explore the code</a>
+      </div>
+    </div>
+    <section>
+      <h2>One meme, two signals</h2>
+      <div class="grid">
+        <article><strong>Read the text</strong><p>EasyOCR extracts meme text, with an optional manual override for Hinglish or English.</p></article>
+        <article><strong>Read the image</strong><p>A Vision Transformer evaluates visual content that can change the meaning of the words.</p></article>
+        <article><strong>Compare the signals</strong><p>MuRIL and ViT predictions are fused, with token attribution and image attention for inspection.</p></article>
+      </div>
+    </section>
+    <section>
+      <h2>Evaluation snapshot</h2>
+      <table>
+        <thead><tr><th>Model</th><th>Accuracy</th><th>Macro F1</th><th>Weighted F1</th></tr></thead>
+        <tbody>
+          <tr><td>Text (MuRIL)</td><td>31.20%</td><td>30.97%</td><td>31.24%</td></tr>
+          <tr><td>Image (ViT)</td><td>33.93%</td><td>30.83%</td><td>30.98%</td></tr>
+          <tr><td>Gated multimodal fusion</td><td>34.53%</td><td>30.46%</td><td>31.23%</td></tr>
+          <tr><td>Late fusion</td><td>33.67%</td><td>32.43%</td><td>32.78%</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:10px">Reported benchmark scores on the Memotion 3.0 evaluation split.</p>
+    </section>
+    <section>
+      <h2>Run the interactive app</h2>
+      <p class="note">GitHub Pages hosts this project page. The Python app runs separately on a Gradio-compatible host such as Hugging Face Spaces. See the repository README for setup and deployment steps.</p>
+    </section>
+    <footer>IndicSent-M ? Research prototype ? <a href="https://github.com/dev-maegor/IndicSent-M" style="color:inherit">Source and deployment guide</a></footer>
+  </main>
+</body>
+</html>

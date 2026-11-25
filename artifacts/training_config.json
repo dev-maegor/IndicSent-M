@@ -1,0 +1,47 @@
+{
+  "seed": 42,
+  "text_model": "google/muril-base-cased",
+  "image_model": "google/vit-base-patch16-224",
+  "text_pooling": "attention_mean",
+  "max_len": 128,
+  "num_classes": 3,
+  "class_names": [
+    "Negative",
+    "Neutral",
+    "Positive"
+  ],
+  "dropout": 0.4,
+  "weight_decay": 0.05,
+  "label_smoothing": 0.05,
+  "class_weight_mode": "sqrt_balanced",
+  "patience": 3,
+  "effective_batch_size": 32,
+  "modes": {
+    "text": {
+      "epochs": 8,
+      "batch_size": 16,
+      "grad_accum": 2,
+      "lr_backbone": 3e-05,
+      "lr_head": 0.0001
+    },
+    "image": {
+      "epochs": 6,
+      "batch_size": 16,
+      "grad_accum": 2,
+      "lr_backbone": 2e-05,
+      "lr_head": 0.0001
+    },
+    "multimodal": {
+      "epochs": 6,
+      "batch_size": 8,
+      "grad_accum": 4,
+      "lr_backbone": 2e-05,
+      "lr_head": 0.0001
+    }
+  },
+  "splits": {
+    "train": 5950,
+    "val": 1050,
+    "test": 1500
+  }
+}
